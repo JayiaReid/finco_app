@@ -61,7 +61,7 @@ const Dashboard = () => {
           total += Number(expense.amount)
       })
 
-      let percent = (total/out)/100
+      let percent = out > 0 ? (total / out) / 100 : 0;
       data.push(percent)
 
       total = 0
@@ -112,11 +112,12 @@ const Dashboard = () => {
           {/* <SummaryCard title="No. of Budgets" value={budgets?.length || 0} /> */}
         </View>
 
+
         {income >0 && <View>
           <PieChartComponent income={Number(income)} totalOut={Number(totalOut)} totalSaved={Number(totalSaved)}/>
         </View>}
 
-          {budgets.length>0 && expenses.length>0 && <View style={{ flex: 1, borderWidth: 1, borderColor: '#e6e6e6', borderRadius: 10, marginVertical: 20, marginHorizontal: 10 }}>
+          {budgets.length>0 && expenses.length>0 && income>0&& <View style={{ flex: 1, borderWidth: 1, borderColor: '#e6e6e6', borderRadius: 10, marginVertical: 20, marginHorizontal: 10 }}>
             <Text style={[styles.title2, {padding: 15}]}>Total Expenses</Text>
             <ProgressChart data={data}
   width={Dimensions.get('screen').width*0.7}

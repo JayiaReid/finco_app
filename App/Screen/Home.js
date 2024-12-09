@@ -1,17 +1,45 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useRef, useState } from "react";
+import { StyleSheet } from "react-native";
 import {
   Image,
   SafeAreaView,
   Text,
   View,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Home = () => {
   const logo = require("../../assets/logo.webp");
   const nav = useNavigation();
+  const [ballAnimationTriggered, setBallAnimationTriggered] = useState(false);
+  const [ballAnimationTriggered2, setBallAnimationTriggered2] = useState(false);
+  const ballScale = useRef(new Animated.Value(1)).current;
+  const ballScale2 = useRef(new Animated.Value(1)).current;
+
+  const navigate = () => {
+    setBallAnimationTriggered(true);
+    Animated.timing(ballScale, {
+      toValue: 20,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      nav.navigate('login'); 
+    });
+  };
+
+  const navigate2 = () => {
+    setBallAnimationTriggered2(true);
+    Animated.timing(ballScale2, {
+      toValue: 20,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      nav.navigate('signup'); 
+    });
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "#0F172A", flex: 1 }}>
@@ -56,7 +84,7 @@ const Home = () => {
         </Text>
         <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
           <TouchableOpacity
-            onPress={() => nav.navigate("signup")}
+            onPress={navigate2}
             style={{
               backgroundColor: "transparent",
               paddingVertical: 15,
@@ -72,7 +100,7 @@ const Home = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => nav.navigate("login")}
+            onPress={navigate}
             style={{
               backgroundColor: "#85C898",
               paddingVertical: 15,
@@ -86,9 +114,37 @@ const Home = () => {
             </Text>
           </TouchableOpacity>
         </View>
+        {ballAnimationTriggered && (
+        <Animated.View
+          style={[styles.ball, { transform: [{ scale: ballScale }] }]}
+        />
+      )}
+
+{ballAnimationTriggered2 && (
+        <Animated.View
+          style={[styles.ball2, { transform: [{ scale: ballScale2 }] }]}
+        />
+      )}
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  ball: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#85C898',
+    borderRadius: 25,
+    position: 'absolute',
+  },
+  ball2: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#0F172A',
+    borderRadius: 25,
+    position: 'absolute',
+  },
+})
 
 export default Home;
