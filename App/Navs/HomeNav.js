@@ -19,9 +19,9 @@ const HomeNav = () => {
   return (
     
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="home" component={Home} />
+            {/* <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="login" component={Login} />
-            <Stack.Screen name="signup" component={SignUp} />
+            <Stack.Screen name="signup" component={SignUp} /> */}
             <Stack.Screen name="budgets" component={Budgets} />
             <Stack.Screen name="budget" component={BudgetPage} />
             <Stack.Screen name="savings" component={Savings} />

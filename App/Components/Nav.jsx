@@ -3,6 +3,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import * as Animatable from 'react-native-animatable'
 
 const Nav = ({isActive}) => {
     const nav = useNavigation()
@@ -23,7 +24,13 @@ const Nav = ({isActive}) => {
         onPress={()=>nav.navigate(item.path)}
         style={[styles.navItem, isActive==item.path && styles.activeNavItem]}
       >
-        <Text style={[styles.navText, isActive==item.path && styles.activeNavText]}>{item.title}</Text>
+        {isActive == item.path ? (
+          <Animatable.Text animation="bounce" iterationCount={1} style={styles.activeNavText}>
+            {item.title}
+          </Animatable.Text>
+        ) : (
+        <Text style={styles.navText}>{item.title}</Text>
+        )}
       </TouchableOpacity>
     )
   }
